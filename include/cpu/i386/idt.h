@@ -3,13 +3,23 @@
 
 #include <stdint.h>
 
+#define PIC1_ICW1 0x11
+#define PIC1_ICW2 0x20
+#define PIC1_ICW3 0x04
+#define PIC1_ICW4 0x01
+
+#define PIC2_ICW1 0x11
+#define PIC2_ICW2 0x28
+#define PIC2_ICW3 0x02
+#define PIC2_ICW4 0x01
+
 typedef struct {
-    uint16_t base_low;   // Lower 16 bits of the entry's base address
-    uint16_t selector;   // Code segment selector
-    uint8_t  allways0;   // Always zero
-    uint8_t  flags;      // Flags for the entry
-    uint16_t base_high;  // Upper 16 bits of the entry's base address
-} __attribute__((packed)) idt_entry_t;
+    uint16_t base_low;
+    uint16_t selector;
+    uint8_t  allways0;
+    uint8_t  flags;
+    uint16_t base_high;
+}__attribute__((packed)) idt_entry_t;
 
 typedef struct {
     uint16_t limit;
