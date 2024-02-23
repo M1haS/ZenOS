@@ -1,3 +1,4 @@
+#include "i386/gdt.h"
 #include <stdint.h>
 
 #define WHITE_ON_BLACK 0x0F
@@ -26,6 +27,8 @@ void kmain(void)
 {
     kclear();
     kputs("Hello, World");
+    
+    gdt_init();
 
     for(;;) __asm__ __volatile__ ("hlt");
 }
