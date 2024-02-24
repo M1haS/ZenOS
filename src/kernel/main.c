@@ -1,7 +1,4 @@
-#include "i386/gdt.h"
-#include "drivers/vga.h"
-#include "i386/idt.h"
-#include "i386/timer.h"
+#include "kernel/kernel.h"
 
 __attribute__((noreturn))
 void kmain(void)

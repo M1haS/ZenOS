@@ -3,27 +3,47 @@ OUTPUT_FORMAT(elf32-i386)
 
 SECTIONS
 {
-    . = 2M;
+    __kernel_section_start = .;
 
-    .text BLOCK(4K) : ALIGN(4K)
-    {
-        code = .; _code = .; __code = .;
+    /* Text section */
+    .text 2M : {
+        __kernel_text_section_start = .;
+        . = ALIGN(4);
+
+        /* Set multiboot header */
 	    *(.multiboot)
+        code = .; _code = .; __code = .;
         *(.text)
+        *(.rodata)
+        . = ALIGN(4K);
+        __kernel_text_section_end = .;
     }
 
-    .data BLOCK(4K) : ALIGN(4K)
-    {
+    /* Initialized data section */
+    .data : {
+        __kernel_data_section_start = .;
         data = .; _data = .; __data = .;
         *(.data)
-        *(.rodata)
+        . = ALIGN(4K);
+        __kernel_data_section_end = .;
     }
 
-    .bss BLOCK(4K) : ALIGN(4K)
-    {
+    /* Constant data section */
+    .rodata : {
+        __kernel_rodata_section_start = .;
+        *(.rodata)
+        __kernel_rodata_section_end = .;
+    }
+
+    /* Uninitialized data section */
+    .bss : {
+        __kernel_bss_section_start = .;
         bss = .; _bss = .; __bss = .;
         *(.bss)
+        . = ALIGN(4K);
+        __kernel_bss_section_end = .;
     }
 
     end = .; _end = .; __end = .;
+    __kernel_section_end = .;
 }
